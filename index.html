@@ -21,7 +21,7 @@
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin onerror="document.getElementById('fallback').style.display='block'"></script>
 <script>
 function __mount(){
-  if(typeof React==='undefined' || typeof ReactDOM==='undefined'){document.getElementById('fallback').style.display='block';return;}
+  if(typeof React==='undefined'||typeof ReactDOM==='undefined'){document.getElementById('fallback').style.display='block';return;}
   try{
 const {
   useState,
@@ -90,7 +90,8 @@ const UNITS = [{
   type: "Private",
   cas: true,
   ron: 1727000,
-  eq: "GE Discovery",
+  eq: "GE Discovery IQ",
+  year: "2018",
   note: "Hungarian-owned. Avg 9mo 2025"
 }, {
   id: 5,
@@ -100,7 +101,8 @@ const UNITS = [{
   type: "Private",
   cas: true,
   ron: 1652000,
-  eq: "GE Optima 560 + Omni Legend 16cm",
+  eq: "GE Optima 560 (2012) + GE Omni Legend 16cm",
+  year: "2012",
   note: "2 PET-CT scanners"
 }, {
   id: 6,
@@ -111,6 +113,7 @@ const UNITS = [{
   cas: true,
   ron: 1324000,
   eq: "Siemens Biograph Horizon-3R",
+  year: "2019",
   note: ""
 }, {
   id: 7,
@@ -130,7 +133,8 @@ const UNITS = [{
   type: "Public",
   cas: true,
   ron: 199000,
-  eq: "GE (instalat, reportedly underused)",
+  eq: "GE Discovery IQ",
+  year: "2021",
   note: "Low utilization"
 }, {
   id: 9,
@@ -140,7 +144,8 @@ const UNITS = [{
   type: "Private",
   cas: true,
   ron: 727000,
-  eq: "",
+  eq: "GE Discovery IQ",
+  year: "2023",
   note: "Near Târgu Mureș. Avg 6mo 2025"
 }, {
   id: 10,
@@ -150,7 +155,8 @@ const UNITS = [{
   type: "Private",
   cas: true,
   ron: 380000,
-  eq: "",
+  eq: "ScintCare PET/CT 720E",
+  year: "2024",
   note: ""
 }, {
   id: 11,
@@ -160,7 +166,8 @@ const UNITS = [{
   type: "Public",
   cas: true,
   ron: 380000,
-  eq: "",
+  eq: "GE Discovery PET/CT 710",
+  year: "2015",
   note: "Institutul Regional de Oncologie"
 }, {
   id: 12,
@@ -170,7 +177,8 @@ const UNITS = [{
   type: "Private",
   cas: true,
   ron: 440000,
-  eq: "",
+  eq: "GE Discovery 600",
+  year: "2012",
   note: ""
 }, {
   id: 13,
@@ -180,7 +188,8 @@ const UNITS = [{
   type: "Private",
   cas: true,
   ron: 344000,
-  eq: "GE Discovery IQ4",
+  eq: "GE Discovery IQ",
+  year: "2018",
   note: ""
 }, {
   id: 14,
@@ -190,7 +199,8 @@ const UNITS = [{
   type: "Private",
   cas: true,
   ron: 204000,
-  eq: "",
+  eq: "Siemens Biograph Horizon",
+  year: "2022",
   note: "CDT Provita"
 }, {
   id: 15,
@@ -200,7 +210,8 @@ const UNITS = [{
   type: "Public",
   cas: true,
   ron: 184000,
-  eq: "",
+  eq: "GE Discovery MI",
+  year: "2022",
   note: ""
 }, {
   id: 16,
@@ -210,7 +221,8 @@ const UNITS = [{
   type: "Public",
   cas: true,
   ron: 44000,
-  eq: "",
+  eq: "Siemens Biograph 16",
+  year: "2011",
   note: "Low contract value"
 }, {
   id: 17,
@@ -220,7 +232,8 @@ const UNITS = [{
   type: "Private",
   cas: true,
   ron: 100000,
-  eq: "",
+  eq: "Siemens Biograph Horizon",
+  year: "2021",
   note: ""
 }, {
   id: 18,
@@ -230,7 +243,8 @@ const UNITS = [{
   type: "Public",
   cas: true,
   ron: null,
-  eq: "",
+  eq: "GE Discovery MI Digital Ready",
+  year: "2017",
   note: "No data"
 }, {
   id: 19,
@@ -240,7 +254,8 @@ const UNITS = [{
   type: "Public",
   cas: true,
   ron: 192000,
-  eq: "GE",
+  eq: "GE Discovery IQ",
+  year: "2019",
   note: "Jan 2026"
 }, {
   id: 20,
@@ -260,7 +275,8 @@ const UNITS = [{
   type: "Private",
   cas: true,
   ron: 152000,
-  eq: "",
+  eq: "GE Discovery PET/CT 610",
+  year: "2013",
   note: "Jan 2026"
 }, {
   id: 22,
@@ -270,7 +286,8 @@ const UNITS = [{
   type: "Public",
   cas: true,
   ron: 0,
-  eq: "Siemens Biograph mCT",
+  eq: "Siemens Biograph mCT 20 Slice",
+  year: "2012",
   note: "Spital regional perspectiva"
 }, {
   id: 23,
@@ -290,7 +307,8 @@ const UNITS = [{
   type: "Private",
   cas: false,
   ron: null,
-  eq: "",
+  eq: "GE Discovery IQ",
+  year: "2024",
   note: "NOT in CAS"
 }, {
   id: 25,
@@ -320,7 +338,8 @@ const UNITS = [{
   type: "Private",
   cas: false,
   ron: null,
-  eq: "UIH PET-CT",
+  eq: "UIH uMI-551 digital",
+  year: "2025",
   note: "NOT in CAS. UIH equipment"
 }, {
   id: 28,
@@ -331,17 +350,8 @@ const UNITS = [{
   cas: false,
   ron: null,
   eq: "UIH uMI-550 digital",
+  year: "2025",
   note: "NOT in CAS"
-}, {
-  id: 29,
-  name: "RMN Casa Rusu (2nd)",
-  city: "Maramureș (TBD)",
-  county: "Maramureș",
-  type: "Private",
-  cas: false,
-  ron: null,
-  eq: "",
-  note: "NOT in CAS. Location TBD"
 }];
 const GEO = [{
   id: 'AB',
@@ -614,15 +624,15 @@ const COUNTY_TO_ID = {
 const LAYERS = [{
   id: 'all',
   label: 'Toți jucătorii',
-  desc: '29 unități PET-CT în 14 județe'
+  desc: '28 unități PET-CT în 14 județe'
 }, {
   id: 'private',
   label: 'Privați',
-  desc: '22 unități private'
+  desc: '20 unități private'
 }, {
   id: 'public',
   label: 'Publici',
-  desc: '7 unități publice (spitale de stat)'
+  desc: '8 unități publice (spitale de stat)'
 }, {
   id: 'cas',
   label: 'Cu contract CAS',
@@ -630,19 +640,19 @@ const LAYERS = [{
 }, {
   id: 'noCas',
   label: 'Fără contract CAS',
-  desc: '7 unități private fără CAS'
+  desc: '6 unități private fără CAS'
 }, {
   id: 'privateCas',
   label: 'Privați cu CAS',
-  desc: '15 unități private contractate'
+  desc: '14 unități private contractate'
 }, {
   id: 'privateNoCas',
   label: 'Privați fără CAS',
-  desc: '7 unități — competitive intelligence'
+  desc: '6 unități — competitive intelligence'
 }, {
   id: 'publicCas',
   label: 'Publici cu CAS',
-  desc: '7 unități publice contractate'
+  desc: '8 unități publice contractate'
 }, {
   id: 'publicNoCas',
   label: 'Publici fără CAS',
@@ -1241,7 +1251,7 @@ function PETCTLandscape() {
       color: C.inkM,
       marginTop: '6px'
     }
-  }, u.eq), u.note && /*#__PURE__*/React.createElement("div", {
+  }, u.eq, u.year ? ` · ${u.year}` : ''), u.note && /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: '10px',
       color: C.inkF,
@@ -1384,11 +1394,11 @@ function PETCTLandscape() {
       borderCollapse: 'collapse',
       fontSize: '12px'
     }
-  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, ['#', 'Operator', 'Oraș', 'Județ', 'Tip', 'CAS', 'Echipament', 'Note'].map(h => /*#__PURE__*/React.createElement("th", {
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, ['#', 'Operator', 'Oraș', 'Județ', 'Tip', 'CAS', 'Echipament', 'An', 'Note'].map(h => /*#__PURE__*/React.createElement("th", {
     key: h,
     style: {
       padding: '11px 10px',
-      textAlign: 'left',
+      textAlign: h === 'An' ? 'right' : 'left',
       fontSize: '10px',
       fontWeight: 700,
       letterSpacing: '.05em',
@@ -1448,6 +1458,14 @@ function PETCTLandscape() {
       maxWidth: '150px'
     }
   }, u.eq || '—'), /*#__PURE__*/React.createElement("td", {
+    className: "mono",
+    style: {
+      padding: '9px 10px',
+      fontSize: '11px',
+      color: C.inkM,
+      textAlign: 'right'
+    }
+  }, u.year || '—'), /*#__PURE__*/React.createElement("td", {
     style: {
       padding: '9px 10px',
       fontSize: '11px',
@@ -1460,7 +1478,7 @@ function PETCTLandscape() {
       borderTop: '1px solid ' + C.line
     }
   }, /*#__PURE__*/React.createElement("td", {
-    colSpan: 8,
+    colSpan: 9,
     style: {
       padding: '11px 10px',
       fontWeight: 700,
