@@ -605,42 +605,52 @@ const UNITS = [{
   city: "Cluj-Napoca",
   county: "Cluj",
   type: "Private",
-  cas: false,
+  cas: true,
   ron: null,
   eq: "GE Omni Legend 16cm",
-  note: "NOT in CAS. 2nd Affidea location"
+  note: "Str. Buftea nr. 1. Intrat în programul PET-CT în oct. 2026"
 }, {
   id: 26,
   name: "Life Support (UIH)",
   city: "Cluj-Napoca",
   county: "Cluj",
   type: "Private",
-  cas: false,
+  cas: true,
   ron: null,
   eq: "UIH PET-CT",
-  note: "NOT in CAS. UIH equipment"
+  note: "Intrat în programul PET-CT în oct. 2026"
 }, {
   id: 27,
   name: "Nuclearis (UIH)",
   city: "Baia Mare",
   county: "Maramureș",
   type: "Private",
-  cas: false,
+  cas: true,
   ron: null,
   eq: "UIH uMI-551 digital",
   year: "2025",
-  note: "NOT in CAS. UIH equipment"
+  note: "Intrat în programul PET-CT în oct. 2026"
 }, {
   id: 28,
   name: "RMN Casa Rusu",
   city: "Seini",
   county: "Maramureș",
   type: "Private",
-  cas: false,
+  cas: true,
   ron: null,
   eq: "UIH uMI-550 digital",
   year: "2025",
-  note: "NOT in CAS"
+  note: "Intrat în programul PET-CT în oct. 2026"
+}, {
+  id: 31,
+  name: "Sp. Județean de Urgență Bacău",
+  city: "Bacău",
+  county: "Bacău",
+  type: "Public",
+  cas: true,
+  ron: null,
+  eq: "",
+  note: "Intrat în programul PET-CT în oct. 2026"
 }, {
   id: 30,
   name: "Sp. Județean de Urgență Baia Mare",
@@ -918,7 +928,8 @@ const COUNTY_TO_ID = {
   'Galați': 'GL',
   'Brăila': 'BR',
   'Dolj': 'DJ',
-  'Maramureș': 'MM'
+  'Maramureș': 'MM',
+  'Bacău': 'BC'
 };
 const LAYERS = [{
   id: 'all'
@@ -941,6 +952,55 @@ const LAYERS = [{
 }];
 
 // ── i18n ──
+const MATCH = {
+  all: u => true,
+  private: u => u.type === 'Private',
+  public: u => u.type === 'Public',
+  cas: u => u.cas,
+  noCas: u => !u.cas,
+  privateCas: u => u.type === 'Private' && u.cas,
+  privateNoCas: u => u.type === 'Private' && !u.cas,
+  publicCas: u => u.type === 'Public' && u.cas,
+  publicNoCas: u => u.type === 'Public' && !u.cas
+};
+const DESC = {
+  ro: {
+    all: 'unități PET-CT',
+    private: 'unități private',
+    public: 'unități publice (spitale de stat)',
+    cas: 'unități cu contract CAS',
+    noCas: 'unități fără CAS',
+    privateCas: 'unități private cu CAS',
+    privateNoCas: 'unități private fără CAS',
+    publicCas: 'unități publice cu CAS',
+    publicNoCas: 'unități publice fără CAS',
+    in: 'în',
+    cty: 'județe',
+    cty1: 'județ'
+  },
+  en: {
+    all: 'PET-CT units',
+    private: 'private units',
+    public: 'public units (state hospitals)',
+    cas: 'units with NHS contract',
+    noCas: 'units without NHS',
+    privateCas: 'private units with NHS',
+    privateNoCas: 'private units without NHS',
+    publicCas: 'public units with NHS',
+    publicNoCas: 'public units without NHS',
+    in: 'across',
+    cty: 'counties',
+    cty1: 'county'
+  }
+};
+const layerDesc = (id, lang) => {
+  const us = UNITS.filter(MATCH[id]),
+    d = DESC[lang];
+  const nc = new Set(us.map(u => u.county)).size;
+  let txt = `${us.length} ${d[id]} ${d.in} ${nc} ${nc === 1 ? d.cty1 : d.cty}`;
+  if (us.length > 0 && us.length <= 3) txt += ' — ' + us.map(u => u.name).join(', ');
+  return txt;
+};
 const TR = {
   ro: {
     title: 'Piața PET-CT din România',
@@ -998,17 +1058,6 @@ const TR = {
       privateNoCas: 'Privați fără CAS',
       publicCas: 'Publici cu CAS',
       publicNoCas: 'Publici fără CAS'
-    },
-    layerDesc: {
-      all: '29 unități PET-CT în 14 județe',
-      private: '20 unități private',
-      public: '9 unități publice (spitale de stat)',
-      cas: '21 unități contractate',
-      noCas: '8 unități fără CAS (6 private, 2 publice)',
-      privateCas: '14 unități private contractate',
-      privateNoCas: '6 unități — competitive intelligence',
-      publicCas: '7 unități publice contractate',
-      publicNoCas: '2 unități — UMF Craiova, SJU Baia Mare'
     }
   },
   en: {
@@ -1067,17 +1116,6 @@ const TR = {
       privateNoCas: 'Private without NHS',
       publicCas: 'Public with NHS',
       publicNoCas: 'Public without NHS'
-    },
-    layerDesc: {
-      all: '29 PET-CT units across 14 counties',
-      private: '20 private units',
-      public: '9 public units (state hospitals)',
-      cas: '21 contracted units',
-      noCas: '8 units without NHS (6 private, 2 public)',
-      privateCas: '14 private contracted units',
-      privateNoCas: '6 units — competitive intelligence',
-      publicCas: '7 public contracted units',
-      publicNoCas: '2 units — UMF Craiova, Baia Mare County Hospital'
     }
   }
 };
@@ -1100,18 +1138,7 @@ function PETCTLandscape() {
   const t = TR[lang];
   const [mode, setMode] = useState(() => typeof window !== 'undefined' && window.innerWidth <= 760 ? 'mobile' : 'desktop');
   const isMobile = mode === 'mobile';
-  const filtered = useMemo(() => UNITS.filter(u => {
-    if (layer === 'all') return true;
-    if (layer === 'private') return u.type === 'Private';
-    if (layer === 'public') return u.type === 'Public';
-    if (layer === 'cas') return u.cas;
-    if (layer === 'noCas') return !u.cas;
-    if (layer === 'privateCas') return u.type === 'Private' && u.cas;
-    if (layer === 'privateNoCas') return u.type === 'Private' && !u.cas;
-    if (layer === 'publicCas') return u.type === 'Public' && u.cas;
-    if (layer === 'publicNoCas') return u.type === 'Public' && !u.cas;
-    return true;
-  }), [layer]);
+  const filtered = useMemo(() => UNITS.filter(MATCH[layer]), [layer]);
   const byCounty = useMemo(() => {
     const map = {};
     filtered.forEach(u => {
@@ -1431,7 +1458,7 @@ function PETCTLandscape() {
       color: C.inkM,
       margin: '0 0 14px'
     }
-  }, t.layerDesc[layer]), view === 'map' ? /*#__PURE__*/React.createElement("div", {
+  }, layerDesc(layer, lang)), view === 'map' ? /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       flexDirection: 'column',
